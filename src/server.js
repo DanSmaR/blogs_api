@@ -9,4 +9,7 @@ app.get('/', (_request, response) => {
   response.send();
 });
 
-app.listen(port, () => console.log('ouvindo porta', port));
+app.listen(port, (err) => { 
+  if (err) console.error(err.stack);
+  console.log('ouvindo porta', port);
+});
