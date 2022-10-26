@@ -25,9 +25,12 @@ const createUser = async (data) => {
 
 const getUsers = () => User.findAll({ attributes: { exclude: ['password'] } });
 
+const getUserById = (id) => User.findByPk(id, { attributes: { exclude: ['password'] } });
+
 module.exports = {
   validateUserData,
   verifyDuplicatedEmail,
   createUser,
   getUsers,
+  getUserById,
 };
