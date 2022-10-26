@@ -23,7 +23,14 @@ const validateLoginData = async ({ email, password }) => {
   return token;
 };
 
+const validateToken = (token) => {
+  if (!token) throw createCustomError('Token not found', 401);
+  const data = jwt.validateToken(token);
+  return data;
+};
+
 module.exports = {
   validateLoginFields,
   validateLoginData,
+  validateToken,
 };
