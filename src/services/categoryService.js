@@ -15,7 +15,10 @@ const createCategory = async (data) => {
   return newCategory;
 };
 
+const getCategories = () => Category.findAll();
+
 module.exports = {
   createCategory,
   validateCategoryData,
+  getCategories,
 };

@@ -4,7 +4,10 @@ const { validateToken } = require('../middlewares');
 
 const router = express.Router();
 
-router.route('/')
-  .post(validateToken, categoryController.createCategory);
+router.use(validateToken);
 
-module.exports = router;  
+router.route('/')
+  .post(categoryController.createCategory)
+  .get(categoryController.getCategories);
+
+module.exports = router;

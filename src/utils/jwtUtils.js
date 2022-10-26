@@ -4,7 +4,7 @@ const { createCustomError } = require('../errors/customError');
 
 const createToken = (data) => {
   const token = jwt.sign({ data }, process.env.JWT_SECRET, {
-    expiresIn: '10m',
+    expiresIn: '1m',
     algorithm: 'HS256',
   });
   return token;
