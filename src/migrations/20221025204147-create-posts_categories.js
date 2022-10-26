@@ -15,7 +15,7 @@ module.exports = {
         onDelete: 'CASCADE',
         field: 'post_id',
       },
-      category_id: {
+      categoryId: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.DataTypes.INTEGER,
