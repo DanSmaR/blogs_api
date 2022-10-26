@@ -14,7 +14,12 @@ const userSchema = Joi.object({
   image: Joi.string().allow(''),
 });
 
+const categorySchema = Joi.object({
+  name: Joi.string().required(),
+});
+
 module.exports = {
   loginSchema,
   userSchema,
+  categorySchema,
 };
