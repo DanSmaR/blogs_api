@@ -23,8 +23,11 @@ const createUser = async (data) => {
   return token;
 };
 
+const getUsers = () => User.findAll({ attributes: { exclude: ['password'] } });
+
 module.exports = {
   validateUserData,
   verifyDuplicatedEmail,
   createUser,
+  getUsers,
 };
