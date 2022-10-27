@@ -3,6 +3,21 @@ const { BlogPost, PostCategory, Category, User, sequelize } = require('../models
 const { postSchema } = require('./validations/schemas');
 const { createCustomError } = require('../errors/customError');
 
+const getPostOptions = {
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    },
+  ],
+};
+
 const validatePostData = (data) => {
   const { error, value } = postSchema.validate(data);
   if (error) throw createCustomError(error.message, 400);
@@ -42,24 +57,14 @@ const createPost = async (data, userId) => {
   }
 };
 
-const getPosts = () => BlogPost.findAll({
-  include: [
-    {
-      model: User,
-      as: 'user',
-      attributes: { exclude: ['password'] },
-    },
-    {
-      model: Category,
-      as: 'categories',
-      through: { attributes: [] },
-    },
-  ],
-});
+const getPosts = () => BlogPost.findAll(getPostOptions);
+
+const getPostById = (id) => BlogPost.findByPk(id, getPostOptions);
 
 module.exports = {
   validatePostData,
   verifyCategory,
   createPost,
   getPosts,
+  getPostById,
 };
