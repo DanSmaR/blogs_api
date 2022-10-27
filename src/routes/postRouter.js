@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { categoryController } = require('../controllers');
+const { postController } = require('../controllers');
 const { validateToken } = require('../middlewares');
 
 const router = express.Router();
@@ -8,7 +8,6 @@ const router = express.Router();
 router.use(validateToken);
 
 router.route('/')
-  .post(categoryController.createCategory)
-  .get(categoryController.getCategories);
+  .post(postController.createPost);
 
 module.exports = router;
