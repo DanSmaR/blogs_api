@@ -2,6 +2,12 @@ const { BlogPost, PostCategory, sequelize } = require('../models');
 const { postSchema } = require('./validations/schemas');
 const { createCustomError } = require('../errors/customError');
 
+const validatePostData = (data) => {
+  const { error, value } = postSchema.validate(data);
+  if (error) throw createCustomError(error.message, 400);
+  return value;
+};
+
 const createPost = async (data, userId) => {
   const { title, content, categoryIds } = data;
 
@@ -20,5 +26,6 @@ const createPost = async (data, userId) => {
 };
 
 module.exports = {
+  validatePostData,
   createPost,
 };
