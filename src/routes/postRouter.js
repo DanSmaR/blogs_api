@@ -8,6 +8,7 @@ const router = express.Router();
 router.use(validateToken);
 
 router.route('/')
-  .post(postController.createPost);
+  .post(postController.createPost)
+  .get(postController.getPosts);
 
 module.exports = router;

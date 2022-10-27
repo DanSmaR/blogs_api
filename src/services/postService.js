@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { BlogPost, PostCategory, Category, sequelize } = require('../models');
+const { BlogPost, PostCategory, Category, User, sequelize } = require('../models');
 const { postSchema } = require('./validations/schemas');
 const { createCustomError } = require('../errors/customError');
 
@@ -42,8 +42,24 @@ const createPost = async (data, userId) => {
   }
 };
 
+const getPosts = () => BlogPost.findAll({
+  include: [
+    {
+      model: User,
+      as: 'user',
+      attributes: { exclude: ['password'] },
+    },
+    {
+      model: Category,
+      as: 'categories',
+      through: { attributes: [] },
+    },
+  ],
+});
+
 module.exports = {
   validatePostData,
   verifyCategory,
   createPost,
+  getPosts,
 };
