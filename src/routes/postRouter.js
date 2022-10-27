@@ -12,5 +12,6 @@ router.route('/')
   .get(postController.getPosts);
 
 router.route('/:id')
-  .get(postController.getPostById);
+  .get(postController.getPostById)
+  .put(postController.updatePost);
 module.exports = router;

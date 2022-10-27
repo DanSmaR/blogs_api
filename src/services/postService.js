@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const { BlogPost, PostCategory, Category, User, sequelize } = require('../models');
-const { postSchema } = require('./validations/schemas');
+const { postSchema, updatePostSchema } = require('./validations/schemas');
 const { createCustomError } = require('../errors/customError');
 
 const getPostOptions = {
@@ -24,6 +24,12 @@ const validatePostData = (data) => {
   return value;
 };
 
+const validateUpdatePost = (data) => {
+  const { error, value } = updatePostSchema.validate(data);
+  if (error) throw createCustomError(error.message, 400);
+  return value;
+};
+
 const verifyCategory = async ({ categoryIds }) => {
   const { count } = await Category.findAndCountAll({
     where: {
@@ -37,7 +43,7 @@ const verifyCategory = async ({ categoryIds }) => {
     throw createCustomError('one or more "categoryIds" not found', 400);
   }
 
-  return null;
+  return true;
 };
 
 const createPost = async (data, userId) => {
@@ -65,10 +71,20 @@ const getPostById = async (id) => {
   return post;
 };
 
+const updatePost = async (data, id) => {
+  const { title, content } = data;
+  const [affectedRows] = await BlogPost.update({ title, content, updated: new Date() },
+    { where: { userId: id } });
+  if (affectedRows < 1) throw createCustomError('Post does not exist', 404);
+  return true;
+};
+
 module.exports = {
   validatePostData,
+  validateUpdatePost,
   verifyCategory,
   createPost,
   getPosts,
   getPostById,
+  updatePost,
 };
