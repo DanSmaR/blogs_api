@@ -71,11 +71,11 @@ const getPostById = async (id) => {
   return post;
 };
 
-const updatePost = async (data, id) => {
+const updatePost = async (data, id, userId) => {
   const { title, content } = data;
   const [affectedRows] = await BlogPost.update({ title, content, updated: new Date() },
-    { where: { userId: id } });
-  if (affectedRows < 1) throw createCustomError('Post does not exist', 404);
+    { where: { id, userId } });
+  if (affectedRows < 1) throw createCustomError('Unauthorized user', 401);
   return true;
 };
 

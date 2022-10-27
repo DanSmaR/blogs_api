@@ -21,7 +21,7 @@ const getPostById = async (req, res) => {
 const updatePost = async (req, res) => {
   const data = postService.validateUpdatePost(req.body);
   const { id } = req.params;
-  await postService.updatePost(data, id);
+  await postService.updatePost(data, id, req.data.id);
   const updatedPost = await postService.getPostById(id);
   return res.status(200).json(updatedPost);
 };
