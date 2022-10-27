@@ -59,7 +59,11 @@ const createPost = async (data, userId) => {
 
 const getPosts = () => BlogPost.findAll(getPostOptions);
 
-const getPostById = (id) => BlogPost.findByPk(id, getPostOptions);
+const getPostById = async (id) => {
+  const post = await BlogPost.findByPk(id, getPostOptions);
+  if (!post) throw createCustomError('Post does not exist', 404);
+  return post;
+};
 
 module.exports = {
   validatePostData,
