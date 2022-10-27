@@ -12,11 +12,7 @@ const getPosts = async (_req, res) => {
   return res.status(200).json(posts);
 };
 
-const getPostById = async (req, res) => {
-  const { id } = req.params;
-  const post = await postService.getPostById(id);
-  return res.status(200).json(post);
-};
+const getPostById = async (req, res) => res.status(200).json(req.post);
 
 const updatePost = async (req, res) => {
   const data = postService.validateUpdatePost(req.body);
@@ -26,9 +22,16 @@ const updatePost = async (req, res) => {
   return res.status(200).json(updatedPost);
 };
 
+const deletePost = async (req, res) => {
+  const { id } = req.params;
+  await postService.deletePost(id, req.data.id);
+  return res.status(204).end();
+};
+
 module.exports = {
   createPost,
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };

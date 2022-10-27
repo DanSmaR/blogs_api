@@ -79,6 +79,12 @@ const updatePost = async (data, id, userId) => {
   return true;
 };
 
+const deletePost = async (id, userId) => {
+  const deletedRows = await BlogPost.destroy({ where: { id, userId } });
+  if (deletedRows < 1) throw createCustomError('Unauthorized user', 401);
+  return true;
+};
+
 module.exports = {
   validatePostData,
   validateUpdatePost,
@@ -87,4 +93,5 @@ module.exports = {
   getPosts,
   getPostById,
   updatePost,
+  deletePost,
 };
