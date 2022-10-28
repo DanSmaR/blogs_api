@@ -1,6 +1,7 @@
 const { CustomAPIError } = require('../errors/customError');
 
 const errorHandler = (err, _req, res, _next) => {
+  console.error(err.stack);
   if (err instanceof CustomAPIError) {
     return res.status(err.statusCode).json({ message: err.message });
   }

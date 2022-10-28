@@ -11,4 +11,7 @@ router.route('/')
 router.route('/:id')
   .get(validateToken, userController.getUserById);
 
+router.route('/me')
+  .delete(validateToken, userController.deleteUserLogged);
+
 module.exports = router;

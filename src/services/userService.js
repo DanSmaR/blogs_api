@@ -27,10 +27,17 @@ const getUsers = () => User.findAll({ attributes: { exclude: ['password'] } });
 
 const getUserById = (id) => User.findByPk(id, { attributes: { exclude: ['password'] } });
 
+const deleteUserLogged = async (id) => {
+  const deletedRow = await User.destroy({ where: { id } });
+  if (deletedRow < 1) throw createCustomError('User not deleted. Database Error', 401);
+  return true;
+};
+
 module.exports = {
   validateUserData,
   verifyDuplicatedEmail,
   createUser,
   getUsers,
   getUserById,
+  deleteUserLogged,
 };
