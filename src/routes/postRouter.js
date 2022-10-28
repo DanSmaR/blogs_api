@@ -10,6 +10,9 @@ router.use(validateToken);
 router.route('/')
   .post(postController.createPost)
   .get(postController.getPosts);
+  
+router.route('/search')
+  .get(postController.searchPosts);
 
 router.route('/:id')
   .get(checkPostExistence, postController.getPostById)

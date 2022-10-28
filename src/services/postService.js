@@ -85,6 +85,20 @@ const deletePost = async (id, userId) => {
   return true;
 };
 
+const searchPosts = (query) => BlogPost.findAll({
+  where: {
+    [Op.or]: [
+      {
+        title: { [Op.substring]: query },
+      },
+      {
+        content: { [Op.substring]: query },
+      },
+    ],
+  },
+  ...getPostOptions,
+});
+
 module.exports = {
   validatePostData,
   validateUpdatePost,
@@ -94,4 +108,5 @@ module.exports = {
   getPostById,
   updatePost,
   deletePost,
+  searchPosts,
 };
